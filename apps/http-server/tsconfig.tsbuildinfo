@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/controllers/auth.controller.ts","./src/lib/db.ts","./src/middlewares/auth.middleware.ts","./src/models/user.model.ts","./src/routes/auth.routes.ts","./src/types/auth.types.ts","./src/utils/generatetoken.ts"],"version":"5.9.3"}
