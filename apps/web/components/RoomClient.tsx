@@ -84,7 +84,7 @@ export default function RoomClient({ roomId }: { roomId: string }) {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center gap-4">
-      <div>
+      <div className="fixed top-0 left-0">
         <button
           onClick={handleLeave}
           className="bg-sky-500 text-gray-100 font-medium tracking-tight px-6 py-2 rounded-xl mt-2 cursor-pointer"
@@ -97,11 +97,12 @@ export default function RoomClient({ roomId }: { roomId: string }) {
         {chatList.length !== 0 && chatList.map((c, i) => <p key={i}>{c}</p>)}
       </div>
 
-      <div>
+      <div className="fixed bottom-0 w-full flex justify-center items-center">
         <input
           ref={newChatRef}
           type="text"
           placeholder="Write your message..."
+          className="outline-none border border-black"
         />
         <button
           onClick={handleSend}

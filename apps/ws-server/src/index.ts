@@ -14,7 +14,7 @@ let usersDB: User[] = [];
 
 // Connection Handling
 server.on("connection", (socket, req) => {
-  socket.send("Connected!");
+  socket.send("Welcome!");
 
   // Validate user
   const url = req.url;
@@ -50,7 +50,7 @@ server.on("connection", (socket, req) => {
       }
 
       user.rooms.push(parsedData.roomId);
-      socket.send("Joined room!");
+      socket.send("Room joined!");
     }
 
     // leave room

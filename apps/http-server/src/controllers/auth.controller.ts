@@ -134,7 +134,7 @@ export const onGetUser = async (req: Request, res: Response) => {
 
     res
       .status(200)
-      .json({ name: user.name, email: user.email, avatar: user.avatar });
+      .json({ name: user.name, email: user.email + "?" + "hehehe", avatar: user.avatar });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
