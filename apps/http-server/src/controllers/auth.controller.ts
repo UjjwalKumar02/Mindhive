@@ -81,16 +81,16 @@ export const onLogin = async (req: Request, res: Response) => {
     // Access token
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
       maxAge: ACCESS_TOKEN_LIMIT,
     });
 
     // Refresh token
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
       maxAge: REFRESH_TOKEN_LIMIT,
     });
 
@@ -105,14 +105,14 @@ export const onLogout = async (req: Request, res: Response) => {
   try {
     res.clearCookie("accessToken", {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
     });
 
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
     });
     res.status(200).json({ message: "Logout successful!" });
   } catch (error: any) {
@@ -170,16 +170,16 @@ export const onRefreshToken = async (req: Request, res: Response) => {
     // Access token
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
       maxAge: ACCESS_TOKEN_LIMIT,
     });
 
     // Refresh token
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
       maxAge: REFRESH_TOKEN_LIMIT,
     });
 
