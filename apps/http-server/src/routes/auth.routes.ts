@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  onGetToken,
   onGetUser,
   onLogin,
   onLogout,
@@ -16,5 +17,6 @@ authRouter.post("/logout", onLogout);
 authRouter.post("/refresh_token", onRefreshToken);
 
 authRouter.get("/me", authenticate, onGetUser);
+authRouter.post("/get_token", authenticate, onGetToken);
 
 export default authRouter;

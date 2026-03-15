@@ -1,14 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-import img1 from "../../public/avatar_1.jpg";
-import img2 from "../../public/avatar_2.jpg";
-import img3 from "../../public/avatar_3.jpg";
-import img4 from "../../public/avatar_4.jpg";
-import img5 from "../../public/avatar_5.jpg";
-import img6 from "../../public/avatar_6.webp";
-import img7 from "../../public/avatar_7.jpg";
 
 export default function SignupPage() {
   const HTTP_URL = process.env.NEXT_PUBLIC_HTTP_URL;
@@ -18,13 +12,13 @@ export default function SignupPage() {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   let avatars = [
-    img1.src,
-    img2.src,
-    img3.src,
-    img4.src,
-    img5.src,
-    img6.src,
-    img7.src,
+    "/images/avatar_1.jpg",
+    "/images/avatar_2.jpg",
+    "/images/avatar_3.jpg",
+    "/images/avatar_4.jpg",
+    "/images/avatar_5.jpg",
+    "/images/avatar_6.webp",
+    "/images/avatar_7.jpg",
   ];
 
   function pickAvatar(arr: string[]): string {
@@ -36,6 +30,14 @@ export default function SignupPage() {
   }
 
   const handleSignup = async () => {
+    if (
+      nameRef.current?.value === "" ||
+      emailRef.current?.value === "" ||
+      passwordRef.current?.value === ""
+    ) {
+      alert("All fields are required!");
+      return;
+    }
     const res = await fetch(`${HTTP_URL}/api/auth/signup`, {
       method: "POST",
       headers: {
@@ -50,6 +52,7 @@ export default function SignupPage() {
     });
 
     if (!res.ok) {
+      alert(res.statusText);
       return;
     }
 
@@ -71,15 +74,34 @@ export default function SignupPage() {
       }}
     >
       <label htmlFor="">Name</label>
-      <input ref={nameRef} type="text" />
+      <input
+        className="outline-none border border-black"
+        ref={nameRef}
+        type="text"
+      />
       <br />
       <label htmlFor="">Email</label>
-      <input ref={emailRef} type="text" />
+      <input
+        className="outline-none border border-black"
+        ref={emailRef}
+        type="text"
+      />
       <br />
       <label htmlFor="">Password</label>
-      <input ref={passwordRef} type="text" />
+      <input
+        className="outline-none border border-black"
+        ref={passwordRef}
+        type="password"
+      />
       <br />
-      <button onClick={handleSignup}>Signup</button>
+      <button
+        className="bg-sky-500 text-gray-100 font-medium tracking-tight px-6 py-2 rounded-xl mt-2 cursor-pointer"
+        onClick={handleSignup}
+      >
+        Signup
+      </button>
+
+      <Link href={"/login"} className="text-sky-500 font-medium mt-2">Login</Link>
     </div>
   );
 }

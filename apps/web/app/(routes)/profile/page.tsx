@@ -1,19 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { apiFetch } from "../../lib/apiFetch";
+import { useEffect, useRef, useState } from "react";
+import { apiFetch } from "../../../lib/apiFetch";
 import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const HTTP_URL = process.env.NEXT_PUBLIC_HTTP_URL;
   const router = useRouter();
   const [profileDetails, setProfileDetails] = useState<any>();
+  const roomIdRef = useRef<HTMLInputElement | null>(null);
 
   const fetchProfile = async () => {
     const res = await apiFetch(`${HTTP_URL}/api/auth/me`, {
       method: "GET",
     });
+
+    // if(!res.ok)
 
     const jsonData = await res.json();
     console.log(jsonData);
@@ -29,7 +32,38 @@ export default function ProfilePage() {
       credentials: "include",
     });
 
+    localStorage.removeItem("token");
+
     router.push("/login");
+  };
+
+  const handleJoin = async () => {
+    if (roomIdRef.current?.value === "") {
+      alert("Room id is required!");
+      return;
+    }
+
+    const roomId = roomIdRef.current?.value;
+    if (roomId === "" || !roomId) {
+      alert("Room id is required!");
+      return;
+    }
+
+    const res = await apiFetch(`${HTTP_URL}/api/auth/get_token`, {
+      method: "POST",
+    });
+
+    if (!res.ok) {
+      alert(res.statusText);
+      return;
+    }
+
+    const jsonData = await res.json();
+    const token = jsonData.token;
+
+    localStorage.setItem("token", token);
+
+    router.push(`/room/${roomId}`);
   };
 
   return (
@@ -76,6 +110,22 @@ export default function ProfilePage() {
       >
         Logout
       </button>
+
+      <div className="mt-10 flex flex-col gap-4">
+        <input
+          className="outline-none border border-black"
+          type="text"
+          placeholder="Enter room id"
+          ref={roomIdRef}
+        />
+
+        <button
+          onClick={handleJoin}
+          className="bg-sky-500 text-gray-100 font-medium tracking-tight px-6 py-2 rounded-xl mt-2 cursor-pointer"
+        >
+          Join Room
+        </button>
+      </div>
     </div>
   );
 }

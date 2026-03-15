@@ -189,3 +189,14 @@ export const onRefreshToken = async (req: Request, res: Response) => {
     return;
   }
 };
+
+// Get accessToken
+export const onGetToken = async(req: Request, res: Response) => {
+  const token = req.cookies.accessToken;
+  if(!token){
+    res.status(400).json({ error: "Empty access token!"});
+    return;
+  }
+
+  res.status(200).json({token});
+}
