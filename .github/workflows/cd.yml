@@ -20,6 +20,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
 
           script: |
+            export NVM_DIR="$HOME/.nvm"
+            source $NVM_DIR/nvm.sh
+            
             cd /home/ubuntu/Mindhive
 
             git fetch origin
